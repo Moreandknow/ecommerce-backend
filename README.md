@@ -10,3 +10,6 @@
     [x]  Resend OTP
     [x]  Check OTP
     [x]  Reset Password
+
+    [ ]  Get Profile
+    [ ]  Update Profile
