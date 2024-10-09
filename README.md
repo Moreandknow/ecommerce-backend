@@ -11,5 +11,17 @@
     [x]  Check OTP
     [x]  Reset Password
 
-    [ ]  Get Profile
-    [ ]  Update Profile
+    [x]  Get Profile
+    [x]  Update Profile
+
+    [x]  Migration & Model Slider
+    [x]  Seeder Slider
+    [x]  API Slider
+
+    [ ]  Migration & Model Category
+    [ ]  Seeder Category
+    [ ]  API Category
+
+    
+
+

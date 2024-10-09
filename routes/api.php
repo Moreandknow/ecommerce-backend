@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -23,6 +24,9 @@ Route::prefix('forgot-password')->group(function(){
 });
 
 Route::post('/login', [AuthenticationController::class, 'login']);
+
+Route::get('/slider', [HomeController::class, 'getSlider']);
+
 
 Route::middleware('auth:sanctum')->group(function(){
 
