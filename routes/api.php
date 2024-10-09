@@ -26,6 +26,7 @@ Route::prefix('forgot-password')->group(function(){
 Route::post('/login', [AuthenticationController::class, 'login']);
 
 Route::get('/slider', [HomeController::class, 'getSlider']);
+Route::get('/category', [HomeController::class, 'getCategory']);
 
 
 Route::middleware('auth:sanctum')->group(function(){

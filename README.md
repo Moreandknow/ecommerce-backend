@@ -18,9 +18,9 @@
     [x]  Seeder Slider
     [x]  API Slider
 
-    [ ]  Migration & Model Category
-    [ ]  Seeder Category
-    [ ]  API Category
+    [x]  Migration & Model Category
+    [x]  Seeder Category
+    [x]  API Category
 
     
 
