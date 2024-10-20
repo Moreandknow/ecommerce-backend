@@ -26,8 +26,8 @@ class ResponseFormatter
 
     public static function error($code = null, $validations = null, $messages = [])
     {
-        self::$response['meta']['status'] = 'error';
         self::$response['meta']['code'] = $code;
+        self::$response['meta']['status'] = 'error';
         self::$response['meta']['messages'] = $messages;
         self::$response['meta']['validations'] = $validations;
         self::$response['meta']['response_date'] = now()->format('Y-m-d H:i:s');

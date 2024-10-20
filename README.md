@@ -22,6 +22,10 @@
     [x]  Seeder Category
     [x]  API Category
 
+    [x]  Create credential goole
+    [x]  Create config google
+    [x]  Create API
+
     
 
 
