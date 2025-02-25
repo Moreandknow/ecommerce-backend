@@ -1,7 +1,7 @@
     # API List
 
     [x]  API Check OTP
-    [x] API Register + Send OTP
+    [x]  API Register + Send OTP
     [x]  API Finish Register
     [x]  Resend OTP
     [x]  Login
@@ -26,6 +26,7 @@
     [x]  Create config google
     [x]  Create API
 
-    
-
-
+    [x]  Migration & Model Province, City, Address    
+    [x]  Import Databse Dump for Province, City
+    [x]  API CRUD Address
+    [ ]  API Set Address Utama
