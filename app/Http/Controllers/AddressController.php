@@ -7,6 +7,31 @@ use App\ResponseFormatter;
 
 class AddressController extends Controller
 {
+    public function getProvince()
+    {
+        $provinces = \App\Models\Address\Province::get(['uuid', 'name']);
+
+        return ResponseFormatter::success($provinces);
+    }
+
+    public function getCity()
+    {
+        $query = \App\Models\Address\City::query();
+        if (request()->province_uuid) {
+            $query = $query->whereIn('province_id', function($subQuery){
+                $subQuery->from('provinces')->where('uuid', request()->province_uuid)->select('id');
+            });
+        }
+
+        if (request()->search) {
+            $query = $query->where('name', 'LIKE', '%' . request()->search . '%');
+        }
+
+        $cities = $query->get();
+
+        return ResponseFormatter::success($cities->pluck('api_response'));
+    }
+
     /**
      * Display a listing of the resource.
      */

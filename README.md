@@ -29,4 +29,4 @@
     [x]  Migration & Model Province, City, Address    
     [x]  Import Databse Dump for Province, City
     [x]  API CRUD Address
-    [ ]  API Set Address Utama
+    [x]  API Set Address Utama
