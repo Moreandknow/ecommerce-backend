@@ -30,3 +30,7 @@
     [x]  Import Databse Dump for Province, City
     [x]  API CRUD Address
     [x]  API Set Address Utama
+
+    [x]  Create credential google
+    [x]  Create config google
+    [ ]  Create API
