@@ -31,6 +31,11 @@
     [x]  API CRUD Address
     [x]  API Set Address Utama
 
-    [x]  Create credential google
-    [x]  Create config google
-    [ ]  Create API
+    [x]  Migration & Model: Product, Image, Variation, Review
+    [x]  Dummy Files
+    [x]  Seeder Product
+    [ ]  API Explore Product
+    [ ]  API Detail Product
+    [ ]  API Product Review
+    [ ]  API Seller
+    
