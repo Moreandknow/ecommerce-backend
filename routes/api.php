@@ -43,3 +43,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('city', [AddressController::class, 'getCity']);
 
 });
+
+Route::get('product', [HomeController::class, 'getProduct']);
+Route::get('product/{slug}', [HomeController::class, 'getProductDetail']);
+Route::get('product/{slug}/review', [HomeController::class, 'getProductReview']);
+Route::get('seller/{username}', [HomeController::class, 'getSellerDetail']);
