@@ -34,8 +34,8 @@
     [x]  Migration & Model: Product, Image, Variation, Review
     [x]  Dummy Files
     [x]  Seeder Product
-    [ ]  API Explore Product
-    [ ]  API Detail Product
-    [ ]  API Product Review
-    [ ]  API Seller
+    [x]  API Explore Product
+    [x]  API Detail Product
+    [x]  API Product Review
+    [x]  API Seller
     

@@ -67,7 +67,7 @@ class HomeController extends Controller
         }
 
         if (!is_null(request()->with_description)) {
-            $reviews = $reviews->whereNotNull('with_description');
+            $reviews = $reviews->whereNotNull('description');
         }
 
         $reviews = $reviews->paginate(request()->per_page ?? 10);
