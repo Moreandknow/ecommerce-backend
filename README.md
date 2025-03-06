@@ -38,4 +38,11 @@
     [x]  API Detail Product
     [x]  API Product Review
     [x]  API Seller
+
+    [x]  Migration & Model: Cart, CartItem
+    [x]  Add to Cart 
+    [x]  List Cart
+    [x]  Update Cart Item
+    [x]  Remove Item
+
     
