@@ -51,4 +51,7 @@
     [x]   Apply Voucher
     [x]   remove Voucher
 
-    
+    [x]    Overview + RajaOngkir Config
+    [x]    Set Address
+    [x]    Get Shipping
+    [x]    Update Shipping
