@@ -67,7 +67,7 @@ class Cart extends Model
             'courier_type' => $this->courier_type,
             'courier_estimation' => $this->courier_estimation,
             'courier_price' => $this->courier_price,
-            'voucher' => null,
+            'voucher' => optional($this->voucher)->api_response,
             'subtotal' => $subTotal,
             'voucher_value' => $this->voucher_value,
             'voucher_cashback' => $this->voucher_cashback,

@@ -45,4 +45,10 @@
     [x]  Update Cart Item
     [x]  Remove Item
 
+    [x]   Migration & Model: Voucher
+    [x]   Voucher Seeder
+    [x]   Get List Voucher
+    [x]   Apply Voucher
+    [x]   remove Voucher
+
     

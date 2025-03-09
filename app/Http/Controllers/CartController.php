@@ -28,12 +28,29 @@ class CartController extends Controller
                 'payment_method' => null,
                 'total_payment' => 0,
             ]);
- 
-            $cart->refresh();
+        }
+
+        // Calculate voucher
+        if ($cart->voucher != null) {
+            $voucher = $cart->voucher;
+            if ($voucher->voucher_type == 'discount') {
+                $cart->voucher_value = $voucher->discount_cashback_type == 'percentage' ? $cart->items->sum('total') * $voucher->discount_cashback_value / 100 : $voucher->discount_cashback_value;
+                if (!is_null($voucher->discount_cashback_max) && $cart->voucher_value > $voucher->discount_cashback_max) {
+                    $cart->voucher_value = $voucher->discount_cashback_max;
+                }
+            } elseif ($voucher->voucher_type == 'cashback') {
+                $cart->voucher_cashback = $voucher->discount_cashback_type == 'percentage' ? $cart->items->sum('total') * $voucher->discount_cashback_value / 100 : $voucher->discount_cashback_value;
+                if (!is_null($voucher->discount_cashback_max) && $cart->voucher_cashback > $voucher->discount_cashback_max) {
+                    $cart->voucher_cashback = $voucher->discount_cashback_max;
+                }
+            }
         }
 
         // Recalculate total
         $cart->total = ($cart->items->sum('total')) + $cart->courier_price + $cart->service_fee - $cart->voucher_value;
+        if ($cart->total < 0) {
+            $cart->total = 0;
+        }
         $cart->total_payment = $cart->total - $cart->pay_with_coin;
         $cart->save();
 
@@ -128,5 +145,57 @@ class CartController extends Controller
         ]);
 
         return $this->getCart(); 
+    }
+
+    public function getVoucher()
+    {
+        $vouchers = \App\Models\Voucher::public()->active()->get();
+
+        return ResponseFormatter::success($vouchers->pluck('api_response'));
+    }
+
+    public function applyVoucher()
+    {
+        $validator = \Validator::make(request()->all(), [
+            'voucher_code' => 'required|exists:vouchers,code',
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseFormatter::error(400, $validator->errors());
+        }
+
+        $voucher = \App\Models\Voucher::where('code', request()->voucher_code)->firstOrFail();
+        if ($voucher->start_date > now() || $voucher->end_date < now()) {
+            return ResponseFormatter::error(400, null, [
+                'Voucher tidak bisa digunakan!'
+            ]);
+        }
+
+        $cart = $this->getOrCreateCart();
+        if (!is_null($voucher->seller_id) && $cart->items->count() > 0) {
+            $sellerId = $cart->items->first()->product->seller_id;
+            if ($sellerId != $voucher->seller_id) {
+                return ResponseFormatter::error(400, null, [
+                    'Voucher tidak bisa digunakan oleh penjual yang ada di keranjang belanja!   '
+                ]);
+            }
+        }
+
+        $cart->voucher_id = $voucher->id;
+        $cart->voucher_value = null;
+        $cart->voucher_cashback = null;
+        $cart->save();
+
+        return $this->getCart();
+    }
+
+    public function removeVoucher()
+    {
+        $cart = $this->getOrCreateCart();
+        $cart->voucher_id = null;
+        $cart->voucher_value = null;
+        $cart->voucher_cashback = null;
+
+        return $this->getCart();
     }
 }
