@@ -55,3 +55,8 @@
     [x]    Set Address
     [x]    Get Shipping
     [x]    Update Shipping
+
+    [x]     Overview Checkout
+    [x]     Overview Midtrans
+    [x]     API Checkout
+    []     Callback Midtrans

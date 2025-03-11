@@ -103,4 +103,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Product\Product::class, 'seller_id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order\Order::class, 'user_id');
+    }
 }

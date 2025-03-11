@@ -218,7 +218,6 @@ class CartController extends Controller
 
     public function getShipping()
     {
-
         $cart = $this->getOrCreateCart();
 
         // Validasi courier: jne|pos
@@ -356,5 +355,78 @@ class CartController extends Controller
         })[0];
 
         return $result;
+    }
+
+    public function checkout()
+    {
+        $validator = \Validator::make(request()->all(), [
+            'payment_method' => 'required|in:qris,bni_va,bca_va,gopay',
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseFormatter::error(400, $validator->errors());
+        }
+
+        $cart = $this->getOrCreateCart();
+        if ($cart->items->count() == 0) {
+            return ResponseFormatter::error(400, null, [
+                'Keranjang belanja anda kosong!'
+            ]);
+        }
+
+        if (is_null($cart->courier)) {
+            return ResponseFormatter::error(400, null, [
+                'Anda belum memilih kurir!'
+            ]);
+        }
+
+        $order = \DB::transaction(function() use($cart) {
+            // Create Order
+            $order = auth()->user()->orders()->create([
+                'seller_id' => $cart->items->first()->product->seller_id,
+                'address_id' => $cart->address_id,
+                'courier' => $cart->courier,
+                'courier_type' => $cart->courier_type,
+                'courier_estimation' => $cart->courier_estimation,
+                'courier_price' => $cart->courier_price,
+                'voucher_id' => $cart->voucher_id,
+                'voucher_value' => $cart->voucher_value,
+                'voucher_cashback' => $cart->voucher_cashback,
+                'service_fee' => $cart->service_fee,
+                'total' => $cart->total,
+                'pay_with_coin' => $cart->pay_with_coin,
+                'payment_method' => request()->payment_method,
+                'total_payment' => $cart->total_payment,
+                'is_paid' => false,
+            ]);
+
+            // Create Order item
+            foreach ($cart->items as $item) {
+                $order->items()->create([
+                    'product_id' => $item->product_id,
+                    'variations' => $item->variations,
+                    'qty' => $item->qty,
+                    'note' => $item->note,
+                ]);
+            }
+
+            // Create order status
+            $order->status()->create([
+                'status' => 'pending_payment',
+                'description' => 'Silahkan selesaikan pembayaran Anda'
+            ]);
+
+            // Generate payment ke midtrans
+            $order->refresh();
+            $order->generatePayment();
+
+            // Bersihkan cart & cart items
+            $cart->items()->delete();
+            $cart->delete();
+
+            return $order;
+        });
+
+        return ResponseFormatter::success($order->api_response_detail);
     }
 }
