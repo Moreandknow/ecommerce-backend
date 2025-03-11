@@ -59,4 +59,4 @@
     [x]     Overview Checkout
     [x]     Overview Midtrans
     [x]     API Checkout
-    []     Callback Midtrans
+    [x]     Callback Midtrans
