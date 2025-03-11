@@ -58,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/shipping-fee', [CartController::class, 'updateShippingFee']);
         
         // Checkout
+        Route::post('/toggle-coin', [CartController::class, 'toggleCoin']);
         Route::post('/checkout', [CartController::class, 'checkout']);
     });
 

@@ -416,6 +416,13 @@ class CartController extends Controller
                 'description' => 'Silahkan selesaikan pembayaran Anda'
             ]);
 
+            // Potong saldo coin 
+            if ($order->pay_with_coin > 0) {
+                $order->user->withdraw($order->pay_with_coin, [
+                    'description' => 'Pembayaran pesanan ' . $order->invoice_number
+                ]);
+            }
+
             // Generate payment ke midtrans
             $order->refresh();
             $order->generatePayment();
@@ -428,5 +435,22 @@ class CartController extends Controller
         });
 
         return ResponseFormatter::success($order->api_response_detail);
+    }
+
+    public function toggleCoin()
+    {
+        $cart = $this->getOrCreateCart();
+
+        $coin = 0;
+        if (request()->use == 1) {
+            $balance = auth()->user()->balance;
+            $maxCoin = $cart->items->sum('total') * 0.1;
+            $coin = $balance > $maxCoin ? $maxCoin : $balance;
+        }
+
+        $cart->pay_with_coin = $coin;
+        $cart->save();
+
+        return $this->getCart();
     }
 }

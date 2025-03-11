@@ -1,62 +1,70 @@
     # API List
 
-    [x]  API Check OTP
-    [x]  API Register + Send OTP
-    [x]  API Finish Register
-    [x]  Resend OTP
-    [x]  Login
+    [x]     API Check OTP
+    [x]     API Register + Send OTP
+    [x]     API Finish Register
+    [x]     Resend OTP
+    [x]     Login
 
-    [x]  Request Reset Password + Send OTP
-    [x]  Resend OTP
-    [x]  Check OTP
-    [x]  Reset Password
+    [x]     Request Reset Password + Send OTP
+    [x]     Resend OTP
+    [x]     Check OTP
+    [x]     Reset Password
 
-    [x]  Get Profile
-    [x]  Update Profile
+    [x]     Get Profile
+    [x]     Update Profile
 
-    [x]  Migration & Model Slider
-    [x]  Seeder Slider
-    [x]  API Slider
+    [x]     Migration & Model Slider
+    [x]     Seeder Slider
+    [x]     API Slider
 
-    [x]  Migration & Model Category
-    [x]  Seeder Category
-    [x]  API Category
+    [x]     Migration & Model Category
+    [x]     Seeder Category
+    [x]     API Category
 
-    [x]  Create credential goole
-    [x]  Create config google
-    [x]  Create API
+    [x]     Create credential goole
+    [x]     Create config google
+    [x]     Create API
 
-    [x]  Migration & Model Province, City, Address    
-    [x]  Import Databse Dump for Province, City
-    [x]  API CRUD Address
-    [x]  API Set Address Utama
+    [x]     Migration & Model Province, City, Address    
+    [x]     Import Databse Dump for Province, City
+    [x]     API CRUD Address
+    [x]     API Set Address Utama
 
-    [x]  Migration & Model: Product, Image, Variation, Review
-    [x]  Dummy Files
-    [x]  Seeder Product
-    [x]  API Explore Product
-    [x]  API Detail Product
-    [x]  API Product Review
-    [x]  API Seller
+    [x]     Migration & Model: Product, Image, Variation, Review
+    [x]     Dummy Files
+    [x]     Seeder Product
+    [x]     API Explore Product
+    [x]     API Detail Product
+    [x]     API Product Review
+    [x]     API Seller
 
-    [x]  Migration & Model: Cart, CartItem
-    [x]  Add to Cart 
-    [x]  List Cart
-    [x]  Update Cart Item
-    [x]  Remove Item
+    [x]     Migration & Model: Cart, CartItem
+    [x]     Add to Cart 
+    [x]     List Cart
+    [x]     Update Cart Item
+    [x]     Remove Item
 
-    [x]   Migration & Model: Voucher
-    [x]   Voucher Seeder
-    [x]   Get List Voucher
-    [x]   Apply Voucher
-    [x]   remove Voucher
+    [x]     Migration & Model: Voucher
+    [x]     Voucher Seeder
+    [x]     Get List Voucher
+    [x]     Apply Voucher
+    [x]     remove Voucher
 
-    [x]    Overview + RajaOngkir Config
-    [x]    Set Address
-    [x]    Get Shipping
-    [x]    Update Shipping
+    [x]     Overview + RajaOngkir Config
+    [x]     Set Address
+    [x]     Get Shipping
+    [x]     Update Shipping
 
     [x]     Overview Checkout
     [x]     Overview Midtrans
     [x]     API Checkout
     [x]     Callback Midtrans
+
+    [x]      Install package wallet
+    [x]      Add dummy deposit
+    [x]      Add balance on profile response
+    [x]      API Toggle with Coin
+    [x]      Cut balance on Checkout
+
+    []      Send email to seller
