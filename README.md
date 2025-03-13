@@ -67,4 +67,4 @@
     [x]      API Toggle with Coin
     [x]      Cut balance on Checkout
 
-    []      Send email to seller
+    [x]      Send email to seller
