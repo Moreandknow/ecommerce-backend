@@ -61,10 +61,15 @@
     [x]     API Checkout
     [x]     Callback Midtrans
 
-    [x]      Install package wallet
-    [x]      Add dummy deposit
-    [x]      Add balance on profile response
-    [x]      API Toggle with Coin
-    [x]      Cut balance on Checkout
+    [x]     Install package wallet
+    [x]     Add dummy deposit
+    [x]     Add balance on profile response
+    [x]     API Toggle with Coin
+    [x]     Cut balance on Checkout
 
-    [x]      Send email to seller
+    [x]     Send email to seller
+
+    [x]      List Order
+    []      Detail Order
+    []      Mark as Done + Forward Saldo ke Seller
+    []      Add Review + Add Koin Balance
