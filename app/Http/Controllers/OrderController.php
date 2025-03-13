@@ -39,4 +39,16 @@ class OrderController extends Controller
             return $order->api_response;
         }));
     }
+
+    public function show(string $uuid)
+    {
+        $order = auth()->user()->orders()->with([
+            'seller',
+            'address',
+            'items',
+            'lastStatus'
+        ])->where('uuid', $uuid)->firstOrFail();
+
+        return ResponseFormatter::success($order->api_response_detail);
+    }
 }

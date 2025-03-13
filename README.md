@@ -69,7 +69,7 @@
 
     [x]     Send email to seller
 
-    [x]      List Order
+    [x]     List Order
     []      Detail Order
     []      Mark as Done + Forward Saldo ke Seller
     []      Add Review + Add Koin Balance
