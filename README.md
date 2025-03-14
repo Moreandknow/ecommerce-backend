@@ -79,4 +79,4 @@
     [x]     List Product
     [x]     Add Product
     [x]     Edit Product
-    []      Delete Product
+    [x]     Delete Product
