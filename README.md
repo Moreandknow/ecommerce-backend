@@ -72,4 +72,11 @@
     [x]     List Order
     [x]     Detail Order
     [x]     Mark as Done + Forward Saldo ke Seller
-    []      Add Review + Add Koin Balance
+    [x]     Add Review + Add Koin Balance
+
+## API SELLER
+
+    [x]     List Product
+    []      Add Product
+    []      Edit Product
+    []      Delete Product

@@ -70,6 +70,26 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/{uuid}/mark-done', [OrderController::class, 'markAsDone']);
     });
 
+    Route::prefix('seller-dashboard')->group(function(){
+
+        Route::apiResource('product', \App\Http\Controllers\Seller\ProductController::class)->except([
+            'show'
+        ]);
+
+        Route::apiResource('voucher', \App\Http\Controllers\Seller\VoucherController::class)->except([
+            'show'
+        ]);
+
+        Route::apiResource('order', \App\Http\Controllers\Seller\OrderController::class)->only([
+            'index', 'show'
+        ]);
+        Route::post('order/{uuid}/status', [\App\Http\Controllers\Seller\OrderController::class, 'addStatus']);
+
+        Route::get('wallet-transaction', [WalletController::class, 'index']);
+        Route::get('list-bank', [WalletController::class, 'getListBank']);
+        Route::post('withdraw', [WalletController::class, 'createWithdraw']);
+    });
+
 });
 
 Route::get('product', [HomeController::class, 'getProduct']);
