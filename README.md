@@ -78,5 +78,5 @@
 
     [x]     List Product
     [x]     Add Product
-    []      Edit Product
+    [x]     Edit Product
     []      Delete Product

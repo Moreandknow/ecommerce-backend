@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Http\Controllers\Controller;
 use App\ResponseFormatter;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -26,6 +26,7 @@ class ProductController extends Controller
         }
 
         $products = $query->paginate(request()->per_page ?? 10);
+
         return ResponseFormatter::success($products->through(function($product){
             return $product->api_response_seller;
         }));
@@ -63,27 +64,58 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $uuid)
     {
-        //
+        $rules = $this->getValidation();
+        $rules['old_images'] = 'array';
+        $rules['old_images.*'] = 'url';
+
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return ResponseFormatter::error(400, $validator->errors());
+        }
+
+        $payload = $this->prepareData($validator->validated());
+        $product = \DB::transaction(function() use($payload, $uuid) {
+            $product = auth()->user()->products()->where('uuid', $uuid)->firstOrFail();
+            $product->update($payload);
+
+            $product->variations()->delete();
+            foreach ($payload['variations'] as $variation) {
+                $product->variations()->create($variation);
+            }
+
+            foreach ($product->images as $image) {
+                if (!in_array($image->image, $payload['old_images'])) {
+                    \Storage::disk('public')->delete($image->image);
+                    $image->delete();
+                }
+            }
+            foreach ($payload['images'] as $image) {
+                $product->images()->create($image);
+            }
+
+            return $product;
+        });
+
+        $product->refresh();
+
+        return ResponseFormatter::success($product->api_response_seller);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $uuid)
     {
-        //
+        $product = auth()->user()->products()->where('uuid', $uuid)->firstOrFail();
+        $product->delete();
+
+        return ResponseFormatter::success([
+            'is_deleted' => true
+        ]);
     }
 
     private function getValidation()
@@ -99,7 +131,7 @@ class ProductController extends Controller
             'length' => 'required|numeric|min:1',
             'width' => 'required|numeric|min:1',
             'height' => 'required|numeric|min:1',
-            'video' => 'nullable|file|mimes:mp4,mov,avi,wmv,flv,mkv|max:30720',
+            'video' => 'nullable|file|mimes:mp4,mov,avi,wmv,flv|max:30720',
             'images' => 'required|array|min:1|max:9',
             'images.*' => 'required|image|max:1024',
             'variations' => 'array',
@@ -128,6 +160,16 @@ class ProductController extends Controller
         }
 
         $payload['images'] = $images;
+
+        if (isset($payload['old_images'])) {
+            $oldImages = [];
+            foreach ($payload['old_images'] as $oldImage) {
+                $oldImages[] = str_replace(config('app.url') . '/storage/', '', $oldImage);
+            }
+            $payload['old_images'] = $oldImages;
+        } else {
+            $payload['old_images'] = [];
+        }
 
         return $payload;
     }
