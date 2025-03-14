@@ -81,7 +81,7 @@ class OrderController extends Controller
             'star_courier' => 'required|numeric|min:1|max:5',
             'desccription' => 'nullable|max:255',
             'attachment' => 'array',
-            'attachment.*' => 'file|mines:jpg,jpeg,png,mp4,mov,ogg,mkv|max:10000',
+            'attachment.*' => 'file|mimes:jpg,jpeg,png,mp4,mov,ogg,mkv|max:10000',
             'show_username' => 'required|in:1,0',
         ]);
 

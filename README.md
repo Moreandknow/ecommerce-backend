@@ -77,6 +77,6 @@
 ## API SELLER
 
     [x]     List Product
-    []      Add Product
+    [x]     Add Product
     []      Edit Product
     []      Delete Product
