@@ -80,3 +80,8 @@
     [x]     Add Product
     [x]     Edit Product
     [x]     Delete Product
+
+    [x]     List Product
+    [x]     Add Voucher
+    [x]     Edit Voucher
+    [x]     Delete Voucher
