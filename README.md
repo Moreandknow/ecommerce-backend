@@ -85,3 +85,11 @@
     [x]     Add Voucher
     [x]     Edit Voucher
     [x]     Delete Voucher
+
+    [x]     List Order (Only paid)
+    [x]     Detail Order
+    [x]     Add Status (paid -> on_processing, on_processing -> on_delivery, add on_delivery note)
+
+    []     List Transaksi Wallet
+    []     Get List Bank
+    []     Withdraw
