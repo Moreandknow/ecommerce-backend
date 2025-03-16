@@ -85,7 +85,7 @@ Route::middleware('auth:sanctum')->group(function(){
         ]);
         Route::post('order/{uuid}/status', [\App\Http\Controllers\Seller\OrderController::class, 'addStatus']);
 
-        Route::get('wallet-transaction', [WalletController::class, 'index']);
+        Route::get('wallet-transaction', [\App\Http\Controllers\Seller\WalletController::class, 'index']);
         Route::get('list-bank', [WalletController::class, 'getListBank']);
         Route::post('withdraw', [WalletController::class, 'createWithdraw']);
     });

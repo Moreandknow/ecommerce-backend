@@ -90,6 +90,6 @@
     [x]     Detail Order
     [x]     Add Status (paid -> on_processing, on_processing -> on_delivery, add on_delivery note)
 
-    []     List Transaksi Wallet
+    [x]     List Transaksi Wallet
     []     Get List Bank
     []     Withdraw
