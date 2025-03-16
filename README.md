@@ -91,5 +91,5 @@
     [x]     Add Status (paid -> on_processing, on_processing -> on_delivery, add on_delivery note)
 
     [x]     List Transaksi Wallet
-    []     Get List Bank
-    []     Withdraw
+    [x]     Get List Bank
+    [x]     Withdraw
