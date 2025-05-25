@@ -16,6 +16,7 @@ use App\Http\Controllers\ForgotPasswordController;
 // })->middleware('auth:sanctum');
 
 Route::post('/google-auth', [AuthenticationController::class, 'authGoogle']);
+Route::post('/facebook-auth', [AuthenticationController::class, 'authFacebook']);
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/resend-otp', [AuthenticationController::class, 'resendOtp']);
 Route::post('/check-otp-register', [AuthenticationController::class, 'verifyOtp']);

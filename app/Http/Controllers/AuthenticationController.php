@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ResponseFormatter;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 
 class AuthenticationController extends Controller
 {
@@ -60,6 +61,68 @@ class AuthenticationController extends Controller
             return ResponseFormatter::error(400, null, [
                 'Invalid token'
             ]);
+        }
+    }
+
+    public function authFacebook()
+    {
+        $validator = \Validator::make(request()->all(), [
+            'token' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseFormatter::error(400, $validator->errors());
+        }
+
+        $accessToken = request()->token;
+        $response = Http::get('https://graph.facebook.com/v19.0/me', [ // Baris ini yang tadi error
+            'fields' => 'id,name,email',
+            'access_token' => $accessToken,
+        ]);
+
+        if ($response->failed()) {
+            return ResponseFormatter::error(400, null, ['Invalid Facebook token']);
+        }
+
+        $fbUser = $response->json();
+
+        if (empty($fbUser['email'])) {
+            return ResponseFormatter::error(400, null, ['Facebook email permission is required.']);
+        }
+
+        try {
+            $userId = $fbUser['id'];
+            $name = $fbUser['name'];
+            $email = $fbUser['email'];
+
+            $user = User::where('social_media_provider', 'facebook')->where('social_media_id', $userId)->first();
+            if (!is_null($user)) {
+                $token = $user->createToken(config('app.name'))->plainTextToken;
+                return ResponseFormatter::success(['token' => $token]);
+            }
+
+            $user = User::where('email', $email)->first();
+            if (!is_null($user)) {
+                $user->update([
+                    'social_media_provider' => 'facebook',
+                    'social_media_id' => $userId
+                ]);
+            } else {
+                $user = User::create([
+                    'name' => $name,
+                    'email' => $email,
+                    'social_media_provider' => 'facebook',
+                    'social_media_id' => $userId,
+                    'email_verified_at' => now()
+                ]);
+            }
+
+            $token = $user->createToken(config('app.name'))->plainTextToken;
+
+            return ResponseFormatter::success(['token' => $token]);
+
+        } catch (\Exception $e) {
+            return ResponseFormatter::error(500, null, ['An error occurred: ' . $e->getMessage()]);
         }
     }
 

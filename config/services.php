@@ -28,6 +28,12 @@ return [
         'client_id' => env('GOOGLE_CLIENT')
     ],
 
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT_URI'),
+    ],
+
     'rajaongkir' => [
         'base_url' => 'https://api.rajaongkir.com/starter',
         'key' => env('RAJAONGKIR_KEY'),

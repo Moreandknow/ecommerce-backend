@@ -22,11 +22,15 @@
     [x]     Seeder Category
     [x]     API Category
 
-    [x]     Create credential goole
+    [x]     Create credential google
     [x]     Create config google
     [x]     Create API
 
-    [x]     Migration & Model Province, City, Address    
+    [x]     Create credential facebook
+    [x]     Create config facebook
+    [x]     Create API
+
+    [x]     Migration & Model Province, City, Address
     [x]     Import Databse Dump for Province, City
     [x]     API CRUD Address
     [x]     API Set Address Utama
@@ -40,7 +44,7 @@
     [x]     API Seller
 
     [x]     Migration & Model: Cart, CartItem
-    [x]     Add to Cart 
+    [x]     Add to Cart
     [x]     List Cart
     [x]     Update Cart Item
     [x]     Remove Item
