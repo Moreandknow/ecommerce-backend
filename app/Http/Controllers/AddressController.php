@@ -142,7 +142,7 @@ class AddressController extends Controller
             'address_note',
             'type',
         ]);
-        $payload['city_id'] = \App\Models\address\City::where('uuid', $payload['city_uuid'])->firstOrFail()->id;
+        $payload['city_id'] = \App\Models\Address\City::where('uuid', $payload['city_uuid'])->firstOrFail()->id;
 
         if ($payload['is_default'] == 1) {
             auth()->user()->addresses()->update([
