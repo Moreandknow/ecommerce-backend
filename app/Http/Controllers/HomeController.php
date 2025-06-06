@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\ResponseFormatter;
 use Illuminate\Http\Request;
 
@@ -16,14 +17,14 @@ class HomeController extends Controller
 
     public function getCategory()
     {
-        $categories = \App\Models\Category::whereNull('parent_id')->with('childs')->get();
+        $categories = \App\Models\Category::whereNull('parent_id')->with(['childs'])->get();
 
         return ResponseFormatter::success($categories->pluck('api_response'));
     }
-    
+
     public function getProduct()
     {
-        $products = \App\Models\Product\Product::orderBy('id', 'desc');
+        $products = \App\Models\Product\Product::query();
 
         if (!is_null(request()->category)) {
             $category = \App\Models\Category::where('slug', request()->category)->firstOrFail();
@@ -38,6 +39,28 @@ class HomeController extends Controller
         if (!is_null(request()->search)) {
             $products->where('name', 'LIKE', '%' . request()->search . '%');
         }
+
+        if (!is_null(request()->minimum_price)) {
+            $products->whereRaw('IF(price_sale > 0, price_sale, price) >= ?', request()->minimum_price);
+        }
+
+        if (!is_null(request()->maximum_price)) {
+            $products->whereRaw('IF(price_sale > 0, price_sale, price) <= ?', request()->maximum_price);
+        }
+
+        if (!is_null(request()->sorting_price)) {
+            $type = request()->sorting_price == 'asc' ? 'ASC' : 'DESC';
+            $products->orderByRaw('IF(price_sale > 0, price_sale, price) ' . $type);
+        } else {
+            $products->orderBy('id', 'desc');
+        }
+
+        if (!is_null(request()->categories) && is_array(request()->categories)) {
+            $products->whereHas('category', function($subQuery){
+                $subQuery->whereIn('slug', request()->categories);
+            });
+        }
+
 
         $products = $products->paginate(request()->per_page ?? 10);
 
@@ -83,4 +106,5 @@ class HomeController extends Controller
 
         return ResponseFormatter::success($seller->api_response_as_seller);
     }
+
 }
