@@ -36,6 +36,8 @@ class Cart extends Model
         'total_payment' => 'float',
     ];
 
+    protected $appends = ['subtotal', 'total_gross'];
+
     public function items()
     {
         return $this->hasMany(CartItem::class);
@@ -56,10 +58,18 @@ class Cart extends Model
         return $this->hasOne(\App\Models\Voucher::class, 'id', 'voucher_id');
     }
 
+    public function getSubtotalAttribute()
+    {
+        return $this->items->sum('total');
+    }
+
+    public function getTotalGrossAttribute()
+    {
+        return $this->getSubtotalAttribute() + $this->courier_price + $this->service_fee;
+    }
+
     public function getApiResponseAttribute()
     {
-        $subTotal = $this->items->sum('total');
-
         return [
             'uuid' => $this->uuid,
             'address' => optional($this->address)->api_response,
@@ -68,7 +78,8 @@ class Cart extends Model
             'courier_estimation' => $this->courier_estimation,
             'courier_price' => $this->courier_price,
             'voucher' => optional($this->voucher)->api_response,
-            'subtotal' => $subTotal,
+            'subtotal' => $this->subtotal,             
+            'total_gross' => $this->total_gross, 
             'voucher_value' => $this->voucher_value,
             'voucher_cashback' => $this->voucher_cashback,
             'service_fee' => $this->service_fee,

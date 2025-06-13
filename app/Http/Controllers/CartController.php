@@ -47,9 +47,7 @@ class CartController extends Controller
         }
 
         // Recalculate total
-        $cart->total_gross = ($cart->items->sum('total')) + $cart->courier_price + $cart->service_fee;
-
-        $cart->total = $cart->total_gross - $cart->voucher_value;
+        $cart->total = ($cart->items->sum('total')) + $cart->courier_price + $cart->service_fee - $cart->voucher_value;
         if ($cart->total < 0) {
             $cart->total = 0;
         }
