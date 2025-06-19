@@ -80,8 +80,8 @@ class OrderController extends Controller
             'star_seller' => 'required|numeric|min:1|max:5',
             'star_courier' => 'required|numeric|min:1|max:5',
             'description' => 'nullable|max:255',
-            'attachments' => 'array',
-            'attachments.*' => 'file|mimes:jpg,jpeg,png,mp4,mov,ogg|max:10000',
+            'attachment' => 'array',
+            'attachment.*' => 'file|mimes:jpg,jpeg,png,mp4,mov,ogg|max:10000',
             'show_username' => 'required|in:1,0',
         ]);
 
